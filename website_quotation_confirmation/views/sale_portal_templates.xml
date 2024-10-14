@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sale_order_portal_content_inherit" inherit_id="sale.sale_order_portal_template">
+
+        <xpath expr="//div[@id='quote_content']" position="inside">
+            <div role="dialog" class="modal fade" id="modalconfirm">
+                <div class="modal-dialog">
+                    <form id="confirm" method="POST"
+                          t-attf-action="/my/orders/#{sale_order.id}/confirm?access_token=#{sale_order.access_token}"
+                          class="modal-content">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <header class="modal-header">
+                            <h4 class="modal-title">Confirm This Quotation</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </header>
+                        <footer class="modal-footer">
+                            <button type="submit" t-att-id="sale_order.id" class="btn btn-primary">
+                                <i class="fa fa-check"></i>
+                                Confirm
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//t[@t-set='entries']/div/div/div[hasclass('o_download_pdf')]" position="before">
+            <div class="d-flex gap-1 flex-lg-column flex-xl-row" invisible="sale_order.state != 'sent'">
+                <div class="flex-grow-1">
+                    <a t-if="sale_order.state == 'sent'" role="button" class="btn btn-primary d-block"
+                       data-bs-toggle="modal"
+                       data-bs-target="#modalconfirm" href="#">
+                        <i class="fa fa-check"/>
+                        Confirm
+                    </a>
+                </div>
+            </div>
+        </xpath>
+
+    </template>
+</odoo>

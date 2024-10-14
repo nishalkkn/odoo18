@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+   <t t-name="math_widget.MathWidget">
+       <input type="text" class="o_input flex-grow-1 flex-shrink-1" t-ref="mathinput"/>
+   </t>
+</templates>

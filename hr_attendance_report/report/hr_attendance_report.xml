@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="hr_attendance_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <center>
+                    <h3>
+                        <b>Attendance Report</b>
+                    </h3>
+                </center>
+                <br/>
+                <div>
+                    <t t-if="date['from_date']">
+                        From Date :
+                        <span t-esc="date['from_date']"/>
+                    </t>
+                    <br/>
+                    <t t-if="date['to_date']">
+                        To Date :
+                        <span t-esc="date['to_date']"/>
+                    </t>
+                </div>
+                <br/>
+                <div>
+                    <table class="table report_border table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th style="padding: 0px;" class="text-center">
+                                    <h5>
+                                        <b>Employee</b>
+                                    </h5>
+                                </th>
+                                <th style="padding: 0px;" class="text-center">
+                                    <h5>
+                                        <b>Email</b>
+                                    </h5>
+                                </th>
+                                <th style="padding: 0px;" class="text-center">
+                                    <h5>
+                                        <b>Department</b>
+                                    </h5>
+                                </th>
+                                <th style="padding: 0px;" class="text-center">
+                                    <h5>
+                                        <b>Date</b>
+                                    </h5>
+                                </th>
+                                <th style="padding: 0px;" class="text-center">
+                                    <h5>
+                                        <b>Check In</b>
+                                    </h5>
+                                </th>
+                                <th style="padding: 0px;" class="text-center">
+                                    <h5>
+                                        <b>Check Out</b>
+                                    </h5>
+                                </th>
+                                <th style="padding: 0px;" class="text-center">
+                                    <h5>
+                                        <b>Worked Hours</b>
+                                    </h5>
+                                </th>
+                                <th style="padding: 0px;" class="text-center">
+                                    <h5>
+                                        <b>Overtime Hours</b>
+                                    </h5>
+                                </th>
+                            </tr>
+                            <tbody>
+                                <t t-foreach="report" t-as="d">
+                                    <tr>
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <span t-esc="d['employee']"/>
+                                        </td>
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <span t-esc="d['email']"/>
+                                        </td>
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <span t-esc="d['department']"/>
+                                        </td>
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <span t-esc="d['date']"/>
+                                        </td>
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <span t-esc="d['check_in']"/>
+                                        </td>
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <span t-esc="d['check_out']"/>
+                                        </td>
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <span t-esc="d['worked_hours']"/>
+                                        </td>
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <span t-esc="d['overtime_hours']"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </thead>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
