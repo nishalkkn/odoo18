@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_partner_form_view" model="ir.ui.view">
+        <field name="name">res.partner.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Machines">
+                    <field name="machine_ids" domain="[('id','in',alternative_cust_ids)]"/>
+                    <field name="alternative_cust_ids" invisible="1"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

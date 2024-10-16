@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="web_transfer_track_template">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <section class="s_title parallax s_parallax_is_fixed bg-black-50 pt24 pb24" data-vcss="001"
+                         data-snippet="s_title" data-scroll-background-ratio="1">
+                    <span class="s_parallax_bg oe_img_bg"
+                          style="background-image: url('/web/image/website.s_parallax_default_image'); background-position: 50% 0;"/>
+                    <div class="o_we_bg_filter bg-black-50"/>
+                    <div class="container">
+                        <h1>Transfers</h1>
+                    </div>
+                </section>
+                <section class="machine_transfer_table_row s_text_block pt40 pb40 o_colored_level " data-snippet="s_text_block">
+                    <div>
+                        <table class="table report_border table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 0px;" class="text-center">
+                                        <h5>
+                                            <b>Machine</b>
+                                        </h5>
+                                    </th>
+                                    <th style="padding: 0px;" class="text-center">
+                                        <h5>
+                                            <b>Date</b>
+                                        </h5>
+                                    </th>
+                                    <th style="padding: 0px;" class="text-center">
+                                        <h5>
+                                            <b>Transfer type</b>
+                                        </h5>
+                                    </th>
+                                    <th style="padding: 0px;" class="text-center">
+                                        <h5>
+                                            <b>Customer</b>
+                                        </h5>
+                                    </th>
+                                    <th style="padding: 0px;" class="text-center">
+                                        <h5>
+                                            <b>From location</b>
+                                        </h5>
+                                    </th>
+                                    <th style="padding: 0px;" class="text-center">
+                                        <h5>
+                                            <b>To location</b>
+                                        </h5>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="data" t-as="data">
+                                    <tr class="table_row_transfer">
+                                        <td class="text-center" style="vertical-align:middle;display:none;">
+                                            <span class="transfer_id" t-esc="data.id"/>
+                                        </td>
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <span t-esc="data.machine_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <span t-esc="data.transfer_date"/>
+                                        </td>
+                                        <td class="text-center"
+                                            style="vertical-align:middle;">
+                                            <span t-esc="data.transfer_type"/>
+                                        </td>
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <span t-esc="data.customer_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <span t-esc="data.from_location"/>
+                                        </td>
+                                        <td class="text-center" style="vertical-align:middle;">
+                                            <span t-esc="data.to_location"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>

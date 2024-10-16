@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="machine_list" name="Dynamic Snippet">
+        <section class="best_seller_product_snippet">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center py-5">
+                        <div class="h3" style="text-align:center">Machines</div>
+                        <div id="top_machines_carousel"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

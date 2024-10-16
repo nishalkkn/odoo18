@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="web_order_track_menu" model="website.menu">
+        <field name="name">Transfers</field>
+        <field name="url">/webtransfer</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">91</field>
+    </record>
+</odoo>
+

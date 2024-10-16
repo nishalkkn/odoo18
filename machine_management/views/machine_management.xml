@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="machine_management_view_tree" model="ir.ui.view">
+        <field name="name">machine.management.tree</field>
+        <field name="model">machine.management</field>
+        <field name="arch" type="xml">
+            <tree string="Channel">
+                <field name="name"/>
+                <field name="date_of_purchase"/>
+                <field name="purchase_value"/>
+                <field name="customer_id"/>
+                <field name="warranty"/>
+                <field name="company_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="machine_management_view_form" model="ir.ui.view">
+        <field name="name">machine.management.form</field>
+        <field name="model">machine.management</field>
+        <field name="arch" type="xml">
+            <form string="Machine Management">
+                <header>
+                    <button name="action_transfer_machine_button" class="btn btn-secondary" string="Create Transfer"
+                            type="object"/>
+                    <button name="action_create_service_button" class="btn btn-secondary" string="Create Service"
+                            type="object" invisible="state not in 'in_service' or service_count != 0"/>
+                    <field name="state" widget="statusbar" statusbar_visible="active,in_service"
+                           options="{'clickable':'1'}"/>
+                </header>
+                <sheet>
+                    <div name="button_box" position="inside">
+                        <button class="oe_stat_button" type="object" name="action_get_transfer_count" icon="fa-bars">
+                            <field string="Transfers" name="transfer_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_get_service_count" icon="fa-bars">
+                            <field string="Services" name="service_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h2>
+                            <field name="sequence_no" help="Sequence number of the machine"/>
+                        </h2>
+                        <h1>
+                            <field name="name" help="Name of the machine" placeholder="Machine"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="serial_no"/>
+                            <field name="date_of_purchase"/>
+                        </group>
+                        <group>
+                            <field name="purchase_value"/>
+                            <field name="machine_type_id"/>
+                            <field name="warranty"/>
+                            <field name="customer_id"/>
+                            <field name="company_id"/>
+                            <field name="machine_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="today_date" invisible="1"/>
+                            <field name="total_days"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Machine Parts">
+                            <group>
+                                <field name="machine_part_ids" nolabel="1" colspan="2"/>
+                            </group>
+                        </page>
+                        <page string="Description">
+                            <group>
+                                <field colspan="2" name="description" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="Instructions">
+                            <group>
+                                <field name="machine_instructions" colspan="2" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="machine_management_view_search" model="ir.ui.view">
+        <field name="name">machine.management.search</field>
+        <field name="model">machine.management</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+                <filter string="Active" name="Active" domain="[('state','=','active')]"/>
+                <filter string="Archived" name="Archived" domain="[('active','=',False)]"/>
+                <filter string="In Service" name="In Service" domain="[('state','=','in_service')]"/>
+                <filter string="Warrantied" name="Warrantied" domain="[('warranty','=',True)]"/>
+                <group string="Group by">
+                    <filter string="Name" name="Name" context="{'group_by':'name'}"/>
+                    <filter string="Date of purchase" name="Date of purchase"
+                            context="{'group_by':'date_of_purchase'}"/>
+                    <filter string="Category" name="category" context="{'group_by':'machine_type_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="machine_management_action" model="ir.actions.act_window">
+        <field name="name">Machine</field>
+        <field name="res_model">machine.management</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="machine_management_menu_root" name="Machine management"/>
+    <menuitem id="machine_management" action="machine_management_action" parent="machine_management_menu_root"/>
+
+
+</odoo>

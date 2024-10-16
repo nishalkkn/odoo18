@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="selected_transfer_template_details">
+        <t t-call="website.layout">
+            <div class="oe_structure" style="padding: 50px;">
+                <div class="container">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <t t-esc="selected_transfer.machine_id.name"/>
+                            </h5>
+                            <br/>
+                            <br/>
+                            <span>machine :
+                                <t t-esc="selected_transfer.machine_id.name"/>
+                            </span>
+                            <br/>
+                            <br/>
+                            <t t-if="selected_transfer.transfer_date">
+                                <span>Transfer Date :
+                                    <t t-esc="selected_transfer.transfer_date"/>
+                                </span>
+                                <br/>
+                                <br/>
+                            </t>
+                            <span>Transfer type :
+                                <t t-esc="selected_transfer.transfer_type"/>
+                            </span>
+                            <br/>
+                            <br/>
+                            <t t-if="selected_transfer.from_location">
+                                <span>From location :
+                                    <t t-esc="selected_transfer.from_location"/>
+                                </span>
+                                <br/>
+                                <br/>
+                            </t>
+                            <t t-if="selected_transfer.to_location">
+                                <span>To location :
+                                    <t t-esc="selected_transfer.to_location"/>
+                                </span>
+                                <br/>
+                                <br/>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

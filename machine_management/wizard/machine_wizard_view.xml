@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="machine_wizard_view_form" model="ir.ui.view">
+        <field name="name">machine.wizard.form</field>
+        <field name="model">machine.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="machine_id"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                    <field name="customer_id"/>
+                    <field name="transfer_type"/>
+                </group>
+                <group>
+                    <footer>
+                        <button string="Print Pdf" name="action_print_record" class="oe_highlight" type="object"/>
+                        <button string="Print Xlsx" name="action_print_exel" class="oe_highlight" type="object"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_machine_wizard" model="ir.actions.act_window">
+        <field name="name">Report</field>
+        <field name="res_model">machine.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="machine_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="machine_report_wizard" action="action_machine_wizard" parent="machine_management_menu_root"/>
+
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="sale_order_customizations_form" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_register_payment" string="Register Payment" class="oe_highlight" type="object"
+                        invisible="button_state not in 'visible'"/>
+                <field name="button_state" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="before">
+                <widget name="web_ribbon" title="Paid" bg_color="text-bg-success"
+                        invisible="fully_paid_ribbon != True"/>
+                <field name="fully_paid_ribbon" invisible="1"/>
+                <widget name="web_ribbon" title="Partially Paid" bg_color="text-bg-success"
+                        invisible="partial_paid_ribbon != True"/>
+                <field name="partial_paid_ribbon" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<odoo>
+   <data noupdate="0">
+       <record id="email_template_name" model="mail.template">
+           <field name="name">Machine Service Mail template</field>
+           <field name="model_id" ref="machine_management.model_machine_service"/>
+           <field name="subject">{{ object.company_id.name }}</field>
+           <field name="email_from">{{ (object.customer_id.email) }}</field>
+           <field name="partner_to">{{ object.customer_id.id }}</field>
+           <field name="description">Add Description</field>
+           <field name="body_html" type="html">
+               <div>
+                   <p>
+                       Hello <t t-out="object.customer_id.id"/>,
+                       <br/>
+                       <br/>
+                       Your machine service has been completed !
+                       <br/>
+                       <br/>
+                       <br/>Mitchell Admin
+                       <br/>
+                       <br/>
+                   </p>
+               </div>
+           </field>
+       </record>
+   </data>
+</odoo>

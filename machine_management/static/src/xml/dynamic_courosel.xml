@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+	<t t-name="machine_management.machine_created_wise">
+		<div id="machine_carousel" class="container carousel slide" data-bs-ride="carousel"
+             t-att-data-bs-interval="interval">
+			<div class="carousel-inner row w-100 mx-auto" role="listbox">
+				<t t-foreach="chunkData" t-as="chunk" t-key="chunk_index">
+					<div t-att-class="chunk.is_active ? 'carousel-item active' : 'carousel-item'">
+						<div class="row">
+							<t t-foreach="chunk" t-as="item" t-key="item_index">
+								<div class="p-3 col-md-3">
+									<div class="card" style="width: 18rem;">
+										<img class="card-img-top"
+                                             t-attf-src="data:image/png;base64,{{item.image}}"
+                                             height="250"/>
+                                        <div class="card-body">
+											<h5 class="card-title text-center"
+                                                t-esc="item.name"/>
+										</div>
+									</div>
+								</div>
+							</t>
+						</div>
+					</div>
+				</t>
+			</div>
+            <a class="carousel-control-prev" href="#machine_carousel" role="button" data-bs-slide="prev"
+               aria-label="Previous" title="Previous">
+				<span class="fa fa-chevron-circle-left fa-2x"/>
+                <span class="visually-hidden">Previous</span>
+			</a>
+            <a class="carousel-control-next" href="#machine_carousel" role="button" data-bs-slide="next"
+               aria-label="Next" title="Next">
+				<span class="fa fa-chevron-circle-right fa-2x"/>
+                <span class="visually-hidden">Next</span>
+			</a>
+		</div>
+	</t>
+</templates>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="machine_transfer_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div>
+                    <table class="table report_border table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th style="padding: 0px;" class="text-center">
+                                    <h5>
+                                        <b>Machine</b>
+                                    </h5>
+                                </th>
+                                <th style="padding: 0px;" class="text-center">
+                                    <h5>
+                                        <b>Date</b>
+                                    </h5>
+                                </th>
+                                <th style="padding: 0px;" class="text-center">
+                                    <h5>
+                                        <b>Transfer type</b>
+                                    </h5>
+                                </th>
+                                <th style="padding: 0px;" class="text-center">
+                                    <h5>
+                                        <b>Customer</b>
+                                    </h5>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="report" t-as="d">
+                                <tr>
+                                    <td class="text-center" style="vertical-align:middle;">
+                                        <span t-esc="d[0]"/>
+                                    </td>
+                                    <td class="text-center" style="vertical-align:middle;">
+                                        <span t-esc="d[1]"/>
+                                    </td>
+                                    <td class="text-center" style="vertical-align:middle;">
+                                        <span t-esc="d[2]"/>
+                                    </td>
+                                    <td class="text-center" style="vertical-align:middle;">
+                                        <span t-esc="d[3]"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

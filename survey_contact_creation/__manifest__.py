@@ -15,9 +15,18 @@
     'data': [
         'views/survey_survey_view.xml',
         'views/contact_relation.xml',
+        'views/res_partner.xml',
 
         'security/ir.model.access.csv',
     ],
+
+    'assets':
+        {
+            'web.assets_backend':
+                {
+                    'survey_contact_creation/static/css/ribbon.scss',
+                },
+        },
 
     'license': 'LGPL-3',
 }

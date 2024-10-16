@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="machine_service_action" model="ir.actions.act_window">
+        <field name="name">Machine Service</field>
+        <field name="res_model">machine.service</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="machine_service_view_tree" model="ir.ui.view">
+        <field name="name">machine.service.tree</field>
+        <field name="model">machine.service</field>
+        <field name="arch" type="xml">
+            <tree string="Channel">
+                <field name="machine_id"/>
+                <field name="next_service_date"/>
+                <field name="customer_id"/>
+                <field name="company_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="machine_service_view_form" model="ir.ui.view">
+        <field name="name">machine.service.form</field>
+        <field name="model">machine.service</field>
+        <field name="arch" type="xml">
+            <form string="Machine Service">
+                <header>
+                    <button name="action_start_case" string="Start case" type="object"
+                            invisible="state in 'started' or state in 'request'"/>
+                    <button name="action_close_case" string="Close case" type="object"
+                            invisible="state in 'done' or state in 'request'"/>
+                    <button name="action_approve_service_request" string="Approve" type="object"
+                            invisible="state not in 'request'" groups="machine_management.machine_tech_person"/>
+                    <button name="action_create_invoice" string="Create invoice" class="oe_highlight" type="object"
+                            invisible="invoice_count != 0 or state not in  'done'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="open,started,done,cancel"/>
+                </header>
+                <sheet>
+                    <div name="button_box" position="inside">
+                        <button class="oe_stat_button" type="object" name="action_get_invoices" icon="fa-bars">
+                            <field string="Invoices" name="invoice_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="machine_id" domain="[('state','=','in_service')]"/>
+                            <!--                            <field name="date_of_service"/>-->
+                            <field name="customer_id"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group>
+                            <field name="tech_person_ids" widget="many2many_tags"/>
+                            <field name="service_frequency"/>
+                            <field name="last_service_date"/>
+                            <field name="next_service_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Parts Consumed">
+                            <field name="parts_ids" domain="[('id', 'in', alternate_part_ids)]"/>
+                            <field name="alternate_part_ids" invisible="1"/>
+                        </page>
+                        <page string="Description">
+                            <field name="description" nolabel="1" colspan="2"/>
+                        </page>
+                        <page string="Internal Notes">
+                            <field name="internal_note" nolabel="1" colspan="2"/>
+                        </page>
+                        <page string="Attachment">
+                            <field name="attachment_ids"
+                                   widget="many2many_binary" width="500px"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="machine_service_view_search" model="ir.ui.view">
+        <field name="name">machine.service.search</field>
+        <field name="model">machine.service</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="machine_id" string="Machine"/>
+                <filter string="Archived" name="Archived" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <menuitem id="machine_service" action="machine_service_action" parent="machine_management_menu_root"/>
+
+</odoo>

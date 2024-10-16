@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="machine_part_action" model="ir.actions.act_window">
+        <field name="name">Machine Part</field>
+        <field name="res_model">machine.part</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="machine_part_view_tree" model="ir.ui.view">
+        <field name="name">machine.part.tree</field>
+        <field name="model">machine.part</field>
+        <field name="arch" type="xml">
+            <tree string="Channel" editable="bottom">
+                <field name="product_id" required="1"/>
+                <field name="quantity"/>
+                <field name="uom"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>
