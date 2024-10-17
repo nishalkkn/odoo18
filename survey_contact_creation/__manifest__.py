@@ -5,6 +5,7 @@
     'application': True,
     'summary': 'Surveys Contact Creation',
     'description': """
+This module allow to create contact from survey
        """,
 
     'depends': [
@@ -19,14 +20,6 @@
 
         'security/ir.model.access.csv',
     ],
-
-    'assets':
-        {
-            'web.assets_backend':
-                {
-                    'survey_contact_creation/static/css/ribbon.scss',
-                },
-        },
 
     'license': 'LGPL-3',
 }
