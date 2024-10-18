@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="purchase_migration_wizard_view_form" model="ir.ui.view">
+        <field name="name">purchase.migration.wizard.form</field>
+        <field name="model">purchase.migration.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <span>Click button to fetch purchase order</span>
+                </group>
+                <group>
+                    <footer>
+                        <button string="Fetch" name="fetch_po" class="oe_highlight" type="object"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_purchase_migration_wizard" model="ir.actions.act_window">
+        <field name="name">Fetch</field>
+        <field name="res_model">purchase.migration.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="purchase_migration_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="purchase_migration_wizard" action="action_purchase_migration_wizard" parent="purchase.menu_purchase_root"/>
+
+</odoo>
