@@ -15,7 +15,6 @@ class PurchaseMigrationWizard(models.TransientModel):
         password_db_1 = '2'
         common_1 = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url_db1))
         models_1 = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url_db1))
-        version_db1 = common_1.version()
 
         url_db2 = "http://cybrosys:8018"
         db_2 = 'odoo18_migration'
@@ -23,7 +22,6 @@ class PurchaseMigrationWizard(models.TransientModel):
         password_db_2 = '2'
         common_2 = xmlrpc.client.ServerProxy('{}/xmlrpc/2/common'.format(url_db2))
         models_2 = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url_db2))
-        version_db2 = common_2.version()
 
         uid_db1 = common_1.authenticate(db_1, username_db_1, password_db_1, {})
         uid_db2 = common_2.authenticate(db_2, username_db_2, password_db_2, {})
@@ -47,11 +45,18 @@ class PurchaseMigrationWizard(models.TransientModel):
          db_1_products if not self.env['product.template'].search_read([('name', '=', rec['name'])])]
 
 
+        for rec in db_1_po:
+            partner = self.env['res.partner'].search_read([('name','=',rec['partner_id'][1])])
+            db_2_po = self.env['purchase.order'].search_read([('name', '=', rec['name'])])
+            # print(partner["message_is_follower"])
 
-        # for rec in db_1_po:
-        #     new_purchase = models_2.execute_kw(db_2, uid_db2, password_db_2, 'purchase.order', 'create', [{
-        #         'id': rec['id'],
-        #         'name': rec['name'],
-        #         'partner_id': rec['partner_id'],
-        #         'user_id': rec['user_id'],
-        #     }])
+            # if not db_2_po:
+                # print(partner["name"])
+                # new_purchase = models_2.execute_kw(db_2, uid_db2, password_db_2, 'purchase.order', 'create', [{
+                #             # 'id': rec['id'],
+                #             'name': rec['name'],
+                #             'partner_id': db_2_po.id,
+                #             # 'user_id': rec['user_id'],
+                #         }])
+
+
