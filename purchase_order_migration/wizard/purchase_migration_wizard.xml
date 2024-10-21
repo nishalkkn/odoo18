@@ -7,11 +7,27 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <span>Click button to fetch purchase order</span>
+                    <field name="is_product"/>
+                    <div invisible="is_product != True">
+                        <span>Goods‎ </span><field name="is_goods"/>
+                        <span>Service‎ </span><field name="is_service"/>
+                        <span>Combo‎ </span><field name="is_combo"/>
+                    </div>
+                </group>
+                <group>
+                    <field name="is_po"/>
+                    <div invisible="is_po != True">
+                        <span>RFQ‎ </span><field name="is_rfq"/>
+                        <span>RFQ Sent‎ </span><field name="is_rfq_sent"/>
+                        <span>To Approve‎ </span><field name="is_to_approve"/>
+                        <span>Purchase Order‎ </span><field name="is_purchase"/>
+                        <span>Locked‎ </span><field name="is_done"/>
+                        <span>Cancelled‎ </span><field name="is_cancelled"/>
+                    </div>
                 </group>
                 <group>
                     <footer>
-                        <button string="Fetch" name="fetch_po" class="oe_highlight" type="object"/>
+                        <button string="Fetch" name="action_fetch_po" class="oe_highlight" type="object"/>
                         <button string="Cancel" special="cancel"/>
                     </footer>
                 </group>
@@ -27,6 +43,7 @@
         <field name="target">new</field>
     </record>
 
-    <menuitem id="purchase_migration_wizard" action="action_purchase_migration_wizard" parent="purchase.menu_purchase_root"/>
+    <menuitem id="purchase_migration_wizard" action="action_purchase_migration_wizard"
+              parent="purchase.menu_purchase_root"/>
 
 </odoo>

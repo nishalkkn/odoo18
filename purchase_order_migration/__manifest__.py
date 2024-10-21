@@ -11,6 +11,7 @@ This module allow to migrate purchase orders from odoo17 to odoo18
     'depends': [
         'base',
         'purchase',
+        'product',
     ],
 
     'data': [
