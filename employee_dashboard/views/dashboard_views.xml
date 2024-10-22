@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_employee_dashboard" model="ir.actions.client">
+            <field name="name">Dashboard</field>
+            <field name="tag">employee_dashboard</field>
+        </record>
+
+        <menuitem id="menu_employee_dashboard" name="Dashboard" action="action_employee_dashboard" sequence="100"/>
+    </data>
+
+    <template id="assets_backend" name="Employee Dashboard assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+<!--            <script type="text/javascript" src=""/>-->
+<!--            <script type="text/javascript" src=""/>-->
+<!--            <script type="text/javascript" src=""/>-->
+<!--            <link rel="stylesheet" href=""/>-->
+        </xpath>
+    </template>
+</odoo>
