@@ -7,22 +7,58 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="is_product"/>
+                    <div>
+                        <field name="is_product"/>
+                        <span>
+                            <b>Product</b>
+                        </span>
+                    </div>
+                    <br/>
                     <div invisible="is_product != True">
-                        <span>Goods‎ </span><field name="is_goods"/>
-                        <span>Service‎ </span><field name="is_service"/>
-                        <span>Combo‎ </span><field name="is_combo"/>
+                        <tr>
+                            <td width="150">
+                                <field name="is_goods"/>
+                                <span>Goods</span>
+                            </td>
+                            <td>
+                                <field name="is_service"/>
+                                <span>Service</span>
+                            </td>
+                        </tr>
                     </div>
                 </group>
                 <group>
-                    <field name="is_po"/>
+                    <div>
+                        <field name="is_po"/>
+                        <span>
+                            <b>Purchase Order</b>
+                        </span>
+                    </div>
+                    <br/>
                     <div invisible="is_po != True">
-                        <span>RFQ‎ </span><field name="is_rfq"/>
-                        <span>RFQ Sent‎ </span><field name="is_rfq_sent"/>
-                        <span>To Approve‎ </span><field name="is_to_approve"/>
-                        <span>Purchase Order‎ </span><field name="is_purchase"/>
-                        <span>Locked‎ </span><field name="is_done"/>
-                        <span>Cancelled‎ </span><field name="is_cancelled"/>
+                        <tr>
+                            <td width="150">
+                                <field name="is_rfq"/>
+                                <span>RFQ</span>
+                                <br/>
+                                <field name="is_purchase"/>
+                                <span>Purchase Order</span>
+                            </td>
+                            <td width="150">
+                                <field name="is_rfq_sent"/>
+                                <span>RFQ Sent</span>
+                                <br/>
+                                <field name="is_done"/>
+                                <span>Locked</span>
+                            </td>
+                            <td>
+                                <field name="is_to_approve"/>
+                                <span>To Approve</span>
+                                <br/>
+                                <field name="is_cancelled"/>
+                                <span>Cancelled</span>
+                            </td>
+                        </tr>
                     </div>
                 </group>
                 <group>
