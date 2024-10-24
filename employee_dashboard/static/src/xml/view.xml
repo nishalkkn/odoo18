@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-name="employee_dashboard.EmployeeDashboard">
@@ -10,6 +11,7 @@
                 </center>
             </div>
         </div>
+    <t t-name="employee_dashboard.EmployeeDashboard">
         <div class="">
             <div id="dashboard" class="row main-section" style="margin-left: 50px; margin-right: 50px;
                 margin-top: 50px;">
@@ -17,7 +19,7 @@
                 <!--Personal Information Tile-->
                 <div id="personal_info_tile" class="card" style="margin-left: 18px; width: 28rem;
                     box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2); cursor: pointer;"
-                     t-on-click="personalInfoTileClicked">
+                     t-on-click="personalInfoTileClick">
                     <div class="stat-icon bg-mauve-light d-flex justify-content-left align-items-left">
                         <div class="card-body">
                             <div style="background:green; width:95px; text-align: center; margin-top:-15px;
@@ -25,36 +27,44 @@
                                 <i class="fa fa-user text-mauve"
                                    style="font-size:50px; color: white; margin-top:50%; margin-bottom:25%;"/>
                             </div>
-                            <span class="card-title" id="employee_name" style="font-size: 25px; font-weight: bold;">
-                                <div id="employee_name"/>
-                            </span>
+                            <span class="card-title" id="information" style="font-size: 25px; font-weight: bold;"
+                                  t-esc="state.user_name"/>
                             <br>
                             </br>
                             <div style="font-size:15px;">
-                                <span class="card-title" id="employee_job_title" style="font-weight: bold;">
-                                    <div id="employee_job_title"/>
-                                </span>
+                                <span class="card-title" id="information_data" t-esc="state.user_job"
+                                      style="font-weight: bold;"/>
                                 <br>
                                 </br>
-                                <span class="card-text" id="year_of_experience"/>
+                                <span class="card-text" id="experience"/>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--Hierarchy Tile-->
 
+                <!--Hierarchy Tile-->
                 <div id="org_chart" class="card" style="margin-left: 18px; width: 50%; font-weight: bold;
-                    color: MediumPurple; box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2);">
+                    color: MediumPurple;">
                     <div class="o_horizontal_separator mt-4 mb-3 text-uppercase fw-bolder small"
                          style="color: black;">
                         <u>Organization Chart</u>
                     </div>
+                    <div class="o_field_widget o_readonly_modifier o_field_hr_org_chart position-relative">
+                        <div>
+                            <span id="parent_org" class="o_org_chart_entry_self_container"
+                                  t-if="state.user_val.parent_id" t-esc="state.user_val.parent_id[1]"/>
+                            <span t-if="state.user_val.parent_id" id="hasParent" class="o_org_chart_entry o_org_chart_entry_sub o_treeEntry d-flex position-relative py-2 overflow-visible"
+                                  style="color: black;" t-esc="state.user_val.display_name"/>
+                            <span t-else="" id="child" style="color: black;" t-esc="state.user_val.display_name"/>
+                        </div>
+                        <ul id="chart_list" class="o_org_chart_group_down position-relative"/>
+                        <ul id="emp_chart_list" class="o_org_chart_group_down position-relative"/>
+                    </div>
                 </div>
-
 
                 <!--Attendance Tile-->
                 <div id="attendance_tile" class="col-md-4 col-sm-6"
-                     style=" overflow: hidden; padding-top: 30px;" t-on-click="attendanceTileClicked">
+                     style=" overflow: hidden; padding-top: 30px;" t-on-click="attendanceTileClick">
                     <div class="oh-card" style="box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2);
                         display: flex; justify-content: center;" role="button">
                         <div class="oh-card-body"
@@ -84,7 +94,7 @@
 
                 <!--Leaves Tile-->
                 <div id="leave_tile" class="col-md-4 col-sm-6"
-                     style=" overflow: hidden; padding-top: 30px;" t-on-click="leaveTileClicked">
+                     style=" overflow: hidden; padding-top: 30px;" t-on-click="leaveTileClick">
                     <div class="oh-card" style="box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2);
                         display: flex; justify-content: center;" role="button">
                         <div class="oh-card-body" style="padding: 5px 5px; float: left; width: 100%;
@@ -99,7 +109,7 @@
                                         font-weight: bold; padding-top: 20px; padding-left: 80px;">
                                         <div class="stat_count_opp" style="font-size: 17px;">
                                             <span id="templates">
-                                                <div id="leave_count"/>
+                                                <div id="leaves"/>
                                             </span>
                                         </div>
                                         <div class="stat-head" style="font-size: 14px;">Leaves
@@ -114,7 +124,7 @@
                 <!--Project/Tasks Tile -->
                 <div id="project_tile" class="col-md-4 col-sm-6"
                      style=" overflow: hidden; padding-top: 30px; padding-bottom: 30px;"
-                     t-on-click="projectTileClicked">
+                     t-on-click="projectTileClick">
                     <div class="oh-card" style="box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2);
                         display: flex; justify-content: center;" role="button">
                         <div class="oh-card-body" style="padding: 5px 5px; float: left; width: 100%;
@@ -129,7 +139,7 @@
                                         font-weight: bold; padding-top: 20px; padding-left: 80px;">
                                         <div class="stat_count_ex_rev" style="font-size: 17px;">
                                             <span id="templates">
-                                                <div id="project_count"/>
+                                                <div id="project"/>
                                             </span>
                                         </div>
                                         <div class="stat-head" style="font-size: 14px;">Project/Tasks
@@ -140,7 +150,25 @@
                         </div>
                     </div>
                 </div>
+
+                <!--All Employee Table-->
+                <table id="employee_table" t-if="isEmployeeManager" style="margin-top: 30px;">
+                    <h2><u>All Employees</u></h2>
+                    <t t-foreach="state.value" t-as="emp" t-key="emp">
+                        <tr>
+                            <td class="card" style="background: Lavender; margin: 5px; font-weight: bold; cursor: pointer;"
+                                t-on-click="empClick">
+                                <t t-esc="emp.display_name"/>
+                                <div style="display: none;"><t t-esc="emp.id"/></div>
+                                <div style="display: none;"><t t-esc="emp.user_id[0]"/></div>
+                            </td>
+                        </tr>
+                    </t>
+                    <style type="text/css">table, th, td {text-align:center; padding: 15px;}</style>
+                </table>
+
             </div>
         </div>
+        <style>html .o_web_client > .o_action_manager {overflow:scroll;}</style>
     </t>
 </templates>

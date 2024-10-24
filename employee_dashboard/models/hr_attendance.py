@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, api
+from datetime import datetime
 
 
 class HrAttendance(models.Model):
@@ -12,20 +13,20 @@ class HrAttendance(models.Model):
 
         attendance_count = self.env['hr.attendance'].search_count(
             [('employee_id', '=', current_employee.id)]) if current_employee else 0
-        total_attendance_count = self.env['hr.attendance'].search_count([])
 
         leave_count = self.env['hr.leave'].search_count(
             [('employee_id', '=', current_employee.id)]) if current_employee else 0
-        total_leave_count = self.env['hr.leave'].search_count([])
 
         project_count = self.env['project.project'].search_count([('user_id', '=', self.env.user.id)])
-        total_project_count = self.env['project.project'].search_count([])
+
+        employee_experience = ((datetime.today() - current_employee.create_date).days) // 365
+        years_of_experience = f"{employee_experience} years"
 
         return {
+            'current_employee_id': current_employee.id,
+            'employee_job_title': current_employee.job_id.name,
+            'years_of_experience': years_of_experience,
             'attendance_count': attendance_count,
-            'total_attendance_count': total_attendance_count,
             'leave_count': leave_count,
-            'total_leave_count': total_leave_count,
             'project_count': project_count,
-            'total_project_count': total_project_count,
         }
