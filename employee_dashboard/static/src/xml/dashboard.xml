@@ -41,14 +41,23 @@
                         </div>
                     </div>
                 </div>
-                <!--Hierarchy Tile-->
 
+                <!--Hierarchy Tile-->
                 <div id="org_chart" class="card" style="margin-left: 18px; width: 50%; font-weight: bold;
-                    color: MediumPurple; box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2);">
-                    <div class="o_horizontal_separator mt-4 mb-3 text-uppercase fw-bolder small"
+                    box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2); cursor: pointer;" t-on-click="hierarchyTileClicked">
+                    <div class="o_horizontal_separator mt-4 mb-3 fw-bolder small"
                          style="color: black;">
-                        <u>Organization Chart</u>
+                        <u>ORGANIZATION CHART</u>
+                        <br/>
+                        <br/>
+                        <div id="organization_chart"/>
                     </div>
+                </div>
+
+                <!--Employees-->
+                <div id="personal_info_tile" class="card" style="margin-left: 18px; width: 24.5rem;
+                    box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2); cursor: pointer;"
+                     t-on-click="">
                 </div>
 
 
@@ -121,7 +130,7 @@
                             height: auto; box-sizing: border-box; margin: 0;">
                             <div class="stat-widget-one">
                                 <div class="stat-icon bg-mauve-light d-flex justify-content-left align-items-left">
-                                    <div style="background:#bf80ff;; width:65px; text-align: center;">
+                                    <div style="background:#bf80ff; width:65px; text-align: center;">
                                         <i class="fa fa-puzzle-piece  text-mauve"
                                            style="font-size:50px; color: white; margin-top: 15%;"/>
                                     </div>

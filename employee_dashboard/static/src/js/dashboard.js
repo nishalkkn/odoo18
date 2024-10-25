@@ -22,9 +22,17 @@ class EmployeeDashboard extends Component {
             document.getElementById('project_count').append(result.project_count);
             document.getElementById('employee_name').append(user.name);
             document.getElementById('employee_job_title').append(result.employee_job_title);
-            document.getElementById('year_of_experience').append(result.years_of_experience);
+            document.getElementById('year_of_experience').append('Experience : ', result.years_of_experience,' Years');
+
+            self._fetch_org_chart(self.current_employee_id);
         });
-    };
+    }
+
+    _fetch_org_chart() {
+        this.orm.call("hr.employee", "get_org_chart_data", [], {}).then(function(orgChart) {
+            document.getElementById('organization_chart').innerHTML += orgChart;
+        });
+    }
 
     attendanceTileClicked() {
         this.env.services.action.doAction({
@@ -77,8 +85,26 @@ class EmployeeDashboard extends Component {
             res_model: "hr.employee",
             res_id: this.current_employee_id,
             views: [
-            [false, "form"]
+                [false, "form"]
             ],
+            target: 'current',
+        });
+    }
+
+    hierarchyTileClicked() {
+        this.env.services.action.doAction({
+            type: "ir.actions.act_window",
+            res_model: "hr.employee",
+            res_id: this.current_employee_id,
+            domain: [
+                ['user_id', '=', user.userId]
+            ],
+            views: [
+                [false, "hierarchy"]
+            ],
+            context: {
+                hierarchy_id: this.current_employee_id,
+            },
             target: 'current',
         });
     }
