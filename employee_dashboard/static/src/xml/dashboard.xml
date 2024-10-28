@@ -54,13 +54,6 @@
                     </div>
                 </div>
 
-                <!--Employees-->
-                <div id="personal_info_tile" class="card" style="margin-left: 18px; width: 24.5rem;
-                    box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2); cursor: pointer;"
-                     t-on-click="">
-                </div>
-
-
                 <!--Attendance Tile-->
                 <div id="attendance_tile" class="col-md-4 col-sm-6"
                      style=" overflow: hidden; padding-top: 30px;" t-on-click="attendanceTileClicked">
@@ -149,7 +142,28 @@
                         </div>
                     </div>
                 </div>
+
+                <!--All Employees-->
+                <table id="employee_table" style="margin-top: 30px;">
+                    <h2>
+                        <u>All Employees</u>
+                    </h2>
+                    <t t-foreach="state.value" t-as="employee" t-key="emp">
+                        <tr>
+                            <td class="card"
+                                style="background: Lavender; margin: 5px; font-weight: bold; cursor: pointer;"
+                                t-on-click="employeeTileClicked">
+                                <t t-esc="employee.name"/>
+                                <span style="display:none;">
+                                    <t t-esc="employee.id"/>
+                                </span>
+                            </td>
+                        </tr>
+                    </t>
+                    <style type="text/css">table, th, td {text-align:center; padding: 15px;}</style>
+                </table>
             </div>
         </div>
+        <style>html .o_web_client > .o_action_manager {overflow:scroll;}</style>
     </t>
 </templates>
