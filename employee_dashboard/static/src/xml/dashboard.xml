@@ -13,7 +13,6 @@
         <div class="">
             <div id="dashboard" class="row main-section" style="margin-left: 50px; margin-right: 50px;
                 margin-top: 50px;">
-
                 <!--Personal Information Tile-->
                 <div id="personal_info_tile" class="card" style="margin-left: 18px; width: 28rem;
                     box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2); cursor: pointer;"
@@ -28,23 +27,20 @@
                             <span class="card-title" id="employee_name" style="font-size: 25px; font-weight: bold;">
                                 <div id="employee_name"/>
                             </span>
-                            <br>
-                            </br>
+                            <br></br>
                             <div style="font-size:15px;">
                                 <span class="card-title" id="employee_job_title" style="font-weight: bold;">
                                     <div id="employee_job_title"/>
                                 </span>
-                                <br>
-                                </br>
+                                <br/>
                                 <span class="card-text" id="year_of_experience"/>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!--Hierarchy Tile-->
-                <div id="org_chart" class="card" style="margin-left: 18px; width: 50%; font-weight: bold;
-                    box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2); cursor: pointer;" t-on-click="hierarchyTileClicked">
+                <div id="org_chart" class="card" style="margin-left: 18px; width: 100%; max-width: 900px;
+                font-weight: bold;">
                     <div class="o_horizontal_separator mt-4 mb-3 fw-bolder small"
                          style="color: black;">
                         <u>ORGANIZATION CHART</u>
@@ -53,7 +49,6 @@
                         <div id="organization_chart"/>
                     </div>
                 </div>
-
                 <!--Attendance Tile-->
                 <div id="attendance_tile" class="col-md-4 col-sm-6"
                      style=" overflow: hidden; padding-top: 30px;" t-on-click="attendanceTileClicked">
@@ -83,7 +78,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!--Leaves Tile-->
                 <div id="leave_tile" class="col-md-4 col-sm-6"
                      style=" overflow: hidden; padding-top: 30px;" t-on-click="leaveTileClicked">
@@ -112,7 +106,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!--Project/Tasks Tile -->
                 <div id="project_tile" class="col-md-4 col-sm-6"
                      style=" overflow: hidden; padding-top: 30px; padding-bottom: 30px;"
@@ -142,26 +135,57 @@
                         </div>
                     </div>
                 </div>
-
                 <!--All Employees-->
-                <table id="employee_table" style="margin-top: 30px;">
-                    <h2>
+                <div id="employee_table" t-if="isEmployeeManager" style="margin-top: 30px;">
+                    <h2 style="text-align: center;">
                         <u>All Employees</u>
                     </h2>
-                    <t t-foreach="state.value" t-as="employee" t-key="emp">
-                        <tr>
-                            <td class="card"
-                                style="background: Lavender; margin: 5px; font-weight: bold; cursor: pointer;"
-                                t-on-click="employeeTileClicked">
+                    <div style="display: flex; flex-wrap: wrap;">
+                        <t t-foreach="state.value" t-as="employee" t-key="emp">
+                            <div class="card" id="cards"
+                                 style="background: Lavender; margin: 5px; font-weight: bold; cursor: pointer;
+                                 flex: 23%; text-align: center; padding: 15px; border: 1px solid #ccc;
+                                 border-radius: 5px; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);"
+                                 t-on-click="employeeTileClicked">
                                 <t t-esc="employee.name"/>
                                 <span style="display:none;">
                                     <t t-esc="employee.id"/>
                                 </span>
-                            </td>
-                        </tr>
-                    </t>
-                    <style type="text/css">table, th, td {text-align:center; padding: 15px;}</style>
-                </table>
+                            </div>
+                        </t>
+                    </div>
+                    <div style="text-align:center; cursor:pointer;color:#4f35e6;">
+<!--                        <span t-if="buttonShow"-->
+<!--                              t-on-click="showAllEmployeesClicked">-->
+<!--                            <u>Show All</u>-->
+<!--                        </span>-->
+                        <span t-on-click="">
+                            <u>Show More</u>
+                        </span>
+<!--                        <span t-if="showLess"-->
+<!--                              t-on-click="showLessEmployeesClicked">-->
+<!--                            <u>Show Less</u>-->
+<!--                        </span>-->
+                    </div>
+                </div>
+                <style>
+
+                    @media (max-width: 768px) {
+                    #cards {
+                    width: auto;
+                    flex:100%;
+                    }
+                    }
+
+                    @media (max-width: 768px) {
+                    #org_chart {
+                    width: 90%;
+                    margin-left: auto;
+                    margin-right: auto;
+                    }
+                    }
+
+                </style>
             </div>
         </div>
         <style>html .o_web_client > .o_action_manager {overflow:scroll;}</style>

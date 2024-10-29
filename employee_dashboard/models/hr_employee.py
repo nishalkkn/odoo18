@@ -28,6 +28,7 @@ class HrAttendance(models.Model):
         return {
             'employees': employee_data,
             'current_employee_id': current_employee.id,
+            'current_employee_name': current_employee.name,
             'employee_job_title': current_employee.job_id.name,
             'years_of_experience': years_of_experience,
             'attendance_count': attendance_count,
