@@ -25,15 +25,13 @@
                                    style="font-size:50px; color: white; margin-top:50%; margin-bottom:25%;"/>
                             </div>
                             <span class="card-title" id="employee_name" style="font-size: 25px; font-weight: bold;">
-                                <div id="employee_name"/>
+                                <div t-ref="employee_name"/>
                             </span>
-                            <br></br>
                             <div style="font-size:15px;">
                                 <span class="card-title" id="employee_job_title" style="font-weight: bold;">
-                                    <div id="employee_job_title"/>
+                                    <div t-ref="employee_job_title"/>
                                 </span>
-                                <br/>
-                                <span class="card-text" id="year_of_experience"/>
+                                <span class="card-text" t-ref="year_of_experience"/>
                             </div>
                         </div>
                     </div>
@@ -46,7 +44,7 @@
                         <u>ORGANIZATION CHART</u>
                         <br/>
                         <br/>
-                        <div id="organization_chart"/>
+                        <div t-ref="organization_chart"/>
                     </div>
                 </div>
                 <!--Attendance Tile-->
@@ -67,7 +65,7 @@
                                         font-weight: bold; padding-top: 20px; padding-left: 80px;">
                                         <div class="stat_count_lead" style="font-size: 17px;">
                                             <span id="templates">
-                                                <div id="attendance_count"/>
+                                                <div t-ref="attendance_count"/>
                                             </span>
                                         </div>
                                         <div class="stat-head" style="font-size: 14px;">Attendances
@@ -95,7 +93,7 @@
                                         font-weight: bold; padding-top: 20px; padding-left: 80px;">
                                         <div class="stat_count_opp" style="font-size: 17px;">
                                             <span id="templates">
-                                                <div id="leave_count"/>
+                                                <div t-ref="leave_count"/>
                                             </span>
                                         </div>
                                         <div class="stat-head" style="font-size: 14px;">Leaves
@@ -124,7 +122,7 @@
                                         font-weight: bold; padding-top: 20px; padding-left: 80px;">
                                         <div class="stat_count_ex_rev" style="font-size: 17px;">
                                             <span id="templates">
-                                                <div id="project_count"/>
+                                                <div t-ref="project_count"/>
                                             </span>
                                         </div>
                                         <div class="stat-head" style="font-size: 14px;">Project/Tasks
@@ -154,18 +152,19 @@
                             </div>
                         </t>
                     </div>
-                    <div style="text-align:center; cursor:pointer;color:#4f35e6;">
-<!--                        <span t-if="buttonShow"-->
-<!--                              t-on-click="showAllEmployeesClicked">-->
-<!--                            <u>Show All</u>-->
-<!--                        </span>-->
-                        <span t-on-click="">
-                            <u>Show More</u>
-                        </span>
-<!--                        <span t-if="showLess"-->
-<!--                              t-on-click="showLessEmployeesClicked">-->
-<!--                            <u>Show Less</u>-->
-<!--                        </span>-->
+                    <div style="text-align:center; cursor:pointer;color:#4f35e6; margin-top:10px;">
+                        <button t-if="moreButtonShow" t-on-click="showMoreEmployeesClicked" class="btn btn-secondary"
+                                style="margin-left:10px;">
+                            Show More
+                        </button>
+                        <button t-if="allButtonShow" t-on-click="showAllEmployeesClicked" class="btn btn-secondary"
+                                style="margin-left:10px;">
+                            Show All
+                        </button>
+                        <button t-if="showLess" t-on-click="showLessEmployeesClicked" class="btn btn-secondary"
+                                style="margin-left:10px;">
+                            Show Less
+                        </button>
                     </div>
                 </div>
                 <style>

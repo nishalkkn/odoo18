@@ -1,7 +1,7 @@
 /**@odoo-module **/
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
-import { Component, useState, onWillStart } from  "@odoo/owl";
+import { Component, useState, onWillStart, useRef } from  "@odoo/owl";
 import { user } from "@web/core/user";
 
 function chunk(array, size) {
@@ -23,17 +23,23 @@ class EmployeeDashboard extends Component {
         this.user_tile = null;
         this.chunkData = null
         this.allEmployees = null;
-        this.buttonShow = true;
+        this.allButtonShow = true;
         this.showLess = false;
+        this.moreButtonShow = true;
+        this.chunkValue = 0;
         this._fetch_data();
-        this.a = 0;
+
+        this.attendanceCount = useRef("attendance_count")
+        this.leaveCount = useRef("leave_count")
+        this.projectCount = useRef("project_count")
+        this.employeeName = useRef("employee_name")
+        this.employeeJobTitle = useRef("employee_job_title")
+        this.yearOfExperience = useRef("year_of_experience")
+        this.organizationChart = useRef("organization_chart")
 
         this.state = useState({
             value: {},
         });
-
-        this.isEmployeeManager = user.hasGroup("hr.group_hr_manager");
-
 
         onWillStart(async () => {
             this.isEmployeeManager = await user.hasGroup("hr.group_hr_manager");
@@ -41,28 +47,51 @@ class EmployeeDashboard extends Component {
     }
 
     //    function for fetching data from model
-    async _fetch_data() {
+    //    async _fetch_data() {
+    //        var employees = null;
+    //        const result =  await this.orm.call("hr.employee", "get_tiles_data", [], {})
+    //
+    //        employees = result.employees;
+    //
+    //        this.current_employee_id = result.current_employee_id;
+    //        this.current_employee_name = result.current_employee_name;
+    //        this.attendanceCount.el.innerText = result.attendance_count;
+    //        this.employeeName.el.innerText = user.name;
+    //        this.leaveCount.el.innerText = result.leave_count;
+    //        this.projectCount.el.innerText = result.project_count;
+    //        this.employeeJobTitle.el.innerText = result.employee_job_title;
+    //        this.yearOfExperience.el.innerText = `Experience : ${result.years_of_experience} Years`;
+    //
+    //        this._fetch_org_chart(self.current_employee_id);
+    //
+    //        this.allEmployees = employees,
+    //        this.chunkData = chunk(employees, 8),
+    //        this.chunkData[0].is_active = true,
+    //        this.state.value = this.chunkData[0];
+    //        this.state.value = employees;
+    //    }
+
+    _fetch_data() {
         var self = this;
         var employees = null;
-        await this.orm.call("hr.employee", "get_tiles_data", [], {}).then(function(result) {
+        this.orm.call("hr.employee", "get_tiles_data", [], {}).then(function(result) {
             employees = result.employees;
 
             self.current_employee_id = result.current_employee_id;
             self.current_employee_name = result.current_employee_name;
-            document.getElementById('attendance_count').append(result.attendance_count);
-            document.getElementById('leave_count').append(result.leave_count);
-            document.getElementById('project_count').append(result.project_count);
-            document.getElementById('employee_name').append(user.name);
-            document.getElementById('employee_job_title').append(result.employee_job_title);
-            document.getElementById('year_of_experience').append('Experience : ', result.years_of_experience, ' Years');
+            self.attendanceCount.el.innerText = result.attendance_count;
+            self.employeeName.el.innerText = user.name;
+            self.leaveCount.el.innerText = result.leave_count;
+            self.projectCount.el.innerText = result.project_count;
+            self.employeeJobTitle.el.innerText = result.employee_job_title;
+            self.yearOfExperience.el.innerText = `Experience : ${result.years_of_experience} Years`;
 
+            self.allEmployees = employees,
+            self.chunkData = chunk(employees, 8),
+            self.chunkData[0].is_active = true,
+            self.state.value = self.chunkData[0];
             self._fetch_org_chart(self.current_employee_id);
         });
-
-        this.allEmployees = employees,
-        this.chunkData = chunk(employees, 8),
-        this.chunkData[0].is_active = true,
-        this.state.value = this.chunkData[0];
     }
 
     //    function for fetch org chart data
@@ -85,31 +114,42 @@ class EmployeeDashboard extends Component {
         }
         org_chart_html += `<div style='margin-left: 20px;' class='o_treeEntry py'>${employeeName}</div>`;
         if (children.length > 0) {
-            for (const child of children) {
-                const child_name = child.name;
+            for (const child in children) {
+                const child_name = children[child].name;
                 org_chart_html += `<div style='margin-left: 40px; color: #bf80ff;' class='o_treeEntry py-2'>${child_name}</div>`;
             }
         }
-        document.getElementById('organization_chart').innerHTML = org_chart_html;
+        this.organizationChart.el.innerHTML = org_chart_html;
     }
 
     // button to show all employees
     showAllEmployeesClicked() {
         this.state.value = this.allEmployees;
-        this.buttonShow = false;
+        this.allButtonShow = false;
         this.showLess = true;
+        this.moreButtonShow = false;
     };
 
     // button to show more employees
-//    showMoreEmployeesClicked() {
-//    this.a +=1,
-//    };
+    showMoreEmployeesClicked() {
+        this.chunkValue += 1;
+        if (this.chunkValue < this.chunkData.length) {
+            this.state.value = this.state.value.concat(this.chunkData[this.chunkValue]);
+            this.showLess = true;
+        } else {
+            this.moreButtonShow = false;
+            this.allButtonShow = false;
+            this.showLess = true;
+        }
+    };
 
     // button to show less employees
     showLessEmployeesClicked() {
+        this.chunkValue = 0;
         this.state.value = this.chunkData[0];
-        this.buttonShow = true;
+        this.allButtonShow = true;
         this.showLess = false;
+        this.moreButtonShow = true;
     };
 
     attendanceTileClicked() {
@@ -117,6 +157,7 @@ class EmployeeDashboard extends Component {
         this.env.services.action.doAction({
             type: "ir.actions.act_window",
             res_model: "hr.attendance",
+            name: this.employeeName.el.innerText,
             domain: [
                 ['employee_id', '=', employeeId]
             ],
@@ -130,9 +171,11 @@ class EmployeeDashboard extends Component {
 
     leaveTileClicked() {
         const employeeId = this.employ_tile || this.current_employee_id
+        console.log(this.employeeName.el.innerText)
         this.env.services.action.doAction({
             type: "ir.actions.act_window",
             res_model: "hr.leave",
+            name: this.employeeName.el.innerText,
             domain: [
                 ['employee_id', '=', employeeId]
             ],
@@ -149,6 +192,7 @@ class EmployeeDashboard extends Component {
         this.env.services.action.doAction({
             type: "ir.actions.act_window",
             res_model: "project.project",
+            name: this.employeeName.el.innerText,
             domain: [
                 ['user_id', '=', userId]
             ],
@@ -198,22 +242,23 @@ class EmployeeDashboard extends Component {
         var attendance = await this.orm.searchCount('hr.attendance', [
             ["employee_id", "=", employ_id]
         ]);
-        document.getElementById('attendance_count').innerHTML = attendance;
+        this.attendanceCount.el.innerText = attendance;
         //        finding and replacing attendance count
         var leave = await this.orm.searchCount('hr.leave', [
             ["employee_id", "=", employ_id]
         ]);
-        document.getElementById('leave_count').innerHTML = leave;
+        this.leaveCount.el.innerText = leave;
         //        finding and replacing attendance count
         var project = await this.orm.searchCount('project.project', [
             ["user_id", "=", user_id]
         ]);
-        document.getElementById('project_count').innerHTML = project;
+        this.projectCount.el.innerText = project;
         //        replacing employee name, job title and experience
-        document.getElementById('employee_name').innerHTML = employ_name;
-        document.getElementById('employee_job_title').innerHTML = job_title;
-        document.getElementById('year_of_experience').innerHTML = `Experience : ${employee_experience} Years`;
+        this.employeeName.el.innerText = employ_name;
+        this.employeeJobTitle.el.innerText = job_title;
+        this.yearOfExperience.el.innerText = `Experience : ${employee_experience} Years`;
 
+        // assigning values to handle view of details
         this.employ_tile = employ_id;
         this.employName_tile = employ_name;
         this.user_tile = user_id;
