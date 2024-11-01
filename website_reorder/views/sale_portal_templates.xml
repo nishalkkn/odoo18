@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sale_order_portal_content_inherit" inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//div[@id='intro_row']" position="inside">
+            <div class="flex-grow-1" style="margin-left:484px;">
+                <form id="reorder" method="POST"
+                      t-attf-action="/my/orders/#{sale_order.id}/reorder?access_token=#{sale_order.access_token}">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <button type="submit" t-att-id="sale_order.id" class="btn btn-light">
+                        Reorder
+                    </button>
+                </form>
+            </div>
+        </xpath>
+    </template>
+</odoo>

@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Website Quotation Confirmation",
+    'name': "Website Reorder",
     'application': True,
     'version': '18.0.1.0.1',
-    'summary': 'Website Quotation Confirmation',
+    'summary': 'Reordering from the customer portal',
     'description': """
-This module add feature to allow customer to confirm quotation from the portal.
+This module allows to set reorder from customer portal.
     """,
 
     'depends': [
         'base',
         'sale',
+        'website'
     ],
 
     'data': [

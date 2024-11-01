@@ -9,3 +9,4 @@ class SaleOrder(models.Model):
         for rec in self:
             rec._create_invoices()
         return res
+z
