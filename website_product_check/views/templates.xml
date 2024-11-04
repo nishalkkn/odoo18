@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="product_inherit" inherit_id="website_sale.product">
+        <xpath expr="//div[@id='add_to_cart_wrap']" position="after">
+            <table border="1" class="table table-bordered" style="margin-top:50px;">
+                <tr>
+                    <th>Warehouse</th>
+                    <th>Stock</th>
+                </tr>
+                <t t-foreach="product.get_warehouse_stock_info()" t-as="stock">
+                    <tr>
+                        <td>
+                            <t t-esc="stock['warehouse_name']"/>
+                        </td>
+                        <td>
+                            <t t-esc="stock['quantity']"/>
+                        </td>
+                    </tr>
+                </t>
+            </table>
+        </xpath>
+    </template>
+
+</odoo>
