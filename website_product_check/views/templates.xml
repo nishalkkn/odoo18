@@ -5,7 +5,7 @@
             <table border="1" class="table table-bordered" style="margin-top:50px;">
                 <tr>
                     <th>Warehouse</th>
-                    <th>Stock</th>
+                    <th>Available Quantity</th>
                 </tr>
                 <t t-foreach="product.get_warehouse_stock_info()" t-as="stock">
                     <tr>

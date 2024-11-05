@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from odoo import models
 
 
@@ -5,18 +6,11 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     def get_warehouse_stock_info(self):
-        stock_info = []
-        warehouses = self.env['stock.warehouse'].search([])
-        for warehouse in warehouses:
-            total_quantity = 0
-            locations = self.env['stock.location'].search([('warehouse_id', '=', warehouse.id)])
-            for location in locations:
-                quantity = self.env['stock.quant'].search(
-                    [('product_id', '=', self.id), ('location_id', '=', location.id)],
-                    limit=1)
-                total_quantity += quantity.quantity if quantity else 0
-            stock_info.append({
-                'warehouse_name': warehouse.name,
-                'quantity': total_quantity,
-            })
-            return stock_info
+        """function to get the available quantity of the selected product wrt warehouses inside website product view."""
+        product_product_ids = self.env['product.product'].sudo().search([('product_tmpl_id', '=', self.id)])
+        warehouses = self.env['stock.warehouse'].sudo().search([('company_id', '=', self.env.company.id)])
+        return [{
+            'warehouse_name': warehouse.name,
+            'quantity': sum(product_id.with_context(warehouse_id=warehouse.id).virtual_available for product_id in
+                            product_product_ids),
+        } for warehouse in warehouses]

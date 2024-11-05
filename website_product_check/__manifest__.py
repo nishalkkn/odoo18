@@ -10,7 +10,7 @@ This module allows to showing the available quantity of the product in a particu
 
     'depends': [
         'base',
-        'website_sale'
+        'website_sale',
     ],
 
     'data': [
